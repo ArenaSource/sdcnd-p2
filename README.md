@@ -35,8 +35,10 @@ Distribution of Training Examples
 
 #### Preprocessing
 
-- Normalize image data
-- Shuffle training dataset
+- Normalize image data: All image pixel data is zero-center in the range -0.5 and 0.5 to facilitate the convergence speed of the gradient-descent algorithm.
+- Shuffle training dataset: To avoid start training the network with of highly correlated samples.
+
+No data augmentation was needed to achieve the required accuracy on the validation set.
 
 #### Model Architecture
 
@@ -74,25 +76,38 @@ The final model results were:
 * test set accuracy of 0.929
 
 ##### First Iteration
-LeNet architecture based on the previous lab.
+LeNet architecture based on the previous lab. It's a well know and simple architecture for image classification.
 
 ![alt text](images/lenet.png)
+
+The network was trained for 20 epochs with the following results:
 
 * training set accuracy > 0.99
 * validation set accuracy < 0.90
 
-Result:  **Overfitting**
+These results show that the model is **Overfitting**, it basically "memorized" the training data
+
+- Reduce model complexity
+- Increase the training data
+- Regularization:
+  - Dropout
+  - l2 regularization
+  - Early stoping
 
 
 ##### Second Iteration
-Add Dropout of 50% on the fully connected layers.
+A Dropout of 50% was added between the fully connected layers to avoid overfitting.
 
 ![alt text](images/lenet-drop.png)
+
+The network was trained for 20 epochs with the following results:
 
 * training set accuracy of 0.988
 * validation set accuracy of 0.952
 
 Result: **Validation accuracy > 0.93**
+
+Test accuracy: 0.929
 
 ### Test a Model on New Images
 
@@ -104,6 +119,7 @@ German traffic signs on the web:
 ![alt text](test_images/18.jpg) ![alt text](test_images/3.jpg)
 ![alt text](test_images/32.jpg) ![alt text](test_images/9.jpg)
 
+Most of these images appears to be enhanced photographs, with good illumination and well focused, in contrast with the images from the dataset. This differences may affect the prediction results.
 
 
 #### Performance on New Images
@@ -122,7 +138,10 @@ Results of the prediction:
 | End of all speed and passing limits		| End of all speed and passing limits     							|
 | No passing		| No entry      							|
 
-Accuracy of 75%
+
+The accuracy of 75% on the new images differs from the 93% on the test set thus it seems the model is overfitting on the images from the web
+
+
 
 #### Model Certainty - Softmax Probabilities
 
